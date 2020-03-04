@@ -87,6 +87,7 @@ draw_heatmap <-  function(n,group_list){
 ##' @return a volcano plot according to logFC and P.value(or adjust P.value)
 ##' @author Xiaojie Sun
 ##' @importFrom ggplot2 ggplot
+##' @importFrom ggplot2 aes
 ##' @export
 ##' @examples
 ##' data("des")

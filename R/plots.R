@@ -18,7 +18,7 @@
 ##' group_list <- rep(c("A","B"),each = 3)
 ##' draw_pca(exp,group_list)
 ##' @seealso
-##' \code{\link{draw_heatmap}};\code{\link{draw_volcano}};\code{\link{venn}}
+##' \code{\link{draw_heatmap}};\code{\link{draw_volcano}};\code{\link{draw_venn}}
 
 draw_pca <-  function(exp,group_list){
   p1 <-  all(apply(exp,2,is.numeric))
@@ -49,7 +49,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 ##' @export
 ##' @examples
 ##' #use your example data
-##' exp = matrix(rnorm(60),nrow = 10)
+##' exp = matrix(abs(rnorm(60,sd = 16)),nrow = 10)
+##' exp[,1:3] <- exp[,1:3]+20
 ##' colnames(exp) <- paste0("sample",1:6)
 ##' rownames(exp) <- paste0("gene",1:10)
 ##' exp[1:4,1:4]
@@ -60,7 +61,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 ##' group_list = iris$Species
 ##' draw_heatmap(n,group_list)
 ##' @seealso
-##' \code{\link{draw_pca}};\code{\link{draw_volcano}}
+##' \code{\link{draw_pca}};\code{\link{draw_volcano}};\code{\link{draw_venn}}
 draw_heatmap <-  function(n,group_list){
   annotation_col=data.frame(group=group_list)
   rownames(annotation_col)=colnames(n)
@@ -88,6 +89,14 @@ draw_heatmap <-  function(n,group_list){
 ##' @author Xiaojie Sun
 ##' @importFrom ggplot2 ggplot
 ##' @importFrom ggplot2 aes
+##' @importFrom ggplot2 geom_point
+##' @importFrom ggplot2 scale_color_manual
+##' @importFrom ggplot2 geom_vline
+##' @importFrom ggplot2 geom_hline
+##' @importFrom ggplot2 theme_bw
+##' @importFrom ggplot2 labs
+##' @importFrom ggplot2 theme
+##' @importFrom ggplot2 element_text
 ##' @export
 ##' @examples
 ##' data("des")
@@ -95,7 +104,7 @@ draw_heatmap <-  function(n,group_list){
 ##' draw_volcano(deseq_data)
 ##' draw_volcano(deseq_data,pvalue_cutoff = 0.01,logFC_cutoff = 2)
 ##' @seealso
-##' \code{\link{draw_heatmap}};\code{\link{draw_pca}};\code{\link{venn}}
+##' \code{\link{draw_heatmap}};\code{\link{draw_pca}};\code{\link{draw_venn}}
 
 draw_volcano <- function(deg,pvalue_cutoff = 0.05,logFC_cutoff= 1,pkg = 1,adjust = F){
   if(!is.data.frame(deg)) stop("deg must be a data.frame created by Differential analysis")
@@ -154,6 +163,7 @@ draw_volcano <- function(deg,pvalue_cutoff = 0.05,logFC_cutoff= 1,pkg = 1,adjust
 ##' \code{\link{draw_pca}};\code{\link{draw_volcano}};\code{\link{draw_heatmap}}
 
 draw_venn <- function(x,y,z,name){
+  if(as.numeric(dev.cur())!=1) graphics.off()
   p = venn.diagram(x= list(Deseq2 = x,edgeR = y,limma = z),
                    imagetype ="png",
                    filename=NULL,

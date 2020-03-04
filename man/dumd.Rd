@@ -4,7 +4,7 @@
 \alias{dumd}
 \title{count unique values in every colunms for data.frame}
 \usage{
-dumd(x = iris)
+dumd(x)
 }
 \arguments{
 \item{x}{A data.frame.}
@@ -13,7 +13,7 @@ dumd(x = iris)
 The simple data.frame of columns unique values count in \code{x}
 }
 \description{
-simplify pdata, delete columns with unique values,which can't be used as group vector
+in geo analysis,this function can help you simplify pdata, delete columns with unique values,which can't be used as group vector
 }
 \section{just }{
 

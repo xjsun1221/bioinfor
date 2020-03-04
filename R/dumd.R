@@ -1,7 +1,6 @@
 ##' count unique values in every colunms for data.frame
 ##'
-##' simplify pdata, delete columns with unique values,which can't be used as group vector
-##' @usage dumd(x = iris)
+##' in geo analysis,this function can help you simplify pdata, delete columns with unique values,which can't be used as group vector
 ##' @param x A data.frame.
 ##' @return The simple data.frame of columns unique values count in \code{x}
 ##' @importFrom dplyr arrange
@@ -16,7 +15,6 @@
 ##' dumd(ToothGrowth)
 ##' @section just :
 ##' See what are you doing
-
 
 dumd <- function(x){
   colname <- vector("character")
